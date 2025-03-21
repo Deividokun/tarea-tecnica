@@ -1,49 +1,73 @@
-import React, { useState } from 'react'
-import './App.css'
-function App() {
-  const originalArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-  const [array, setArray] = useState(originalArray)
-  const [isReversed, setIsReversed] = useState(false)
+import React, { useState } from 'react';
+import './App.css';
 
-  const handleReverse = () => {
-    if (isReversed) {
-      setArray(originalArray)
-    } else {
-      setArray([...originalArray].reverse())
+function App() {
+  const [inputArray, setInputArray] = useState('');
+  const [reversedArray, setReversedArray] = useState([]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5000/reverse-array', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ array: inputArray.split(',').map(Number) }), // Convert input string to array of numbers
+      });
+      
+      const data = await response.json();
+      if (data.reversedArray) {
+        setReversedArray(data.reversedArray);
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
-    setIsReversed(!isReversed)
-  }
+  };
 
   return (
-    <div className='reverseTime'>
-      <h2>the original one: {originalArray}</h2>
-      <button
-        onClick={handleReverse}
-        style={{ padding: '10px', cursor: 'pointer', margin: '50px' }}
-      >
-        Reverse
-      </button>
-      <h3>
-        {array.map((num, index) => (
-          <span
-            key={index}
-            style={{
-              color: isReversed
-                ? num === 0
-                  ? 'yellow'
-                  : num % 2 === 0
-                  ? 'green'
-                  : 'red'
-                : 'black',
-              margin: '0 5px'
-            }}
-          >
-            {num}
-          </span>
-        ))}
-      </h3>
+    <div className="App">
+      <h1>Invertir Array</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Escribe números separados por comas"
+          value={inputArray}
+          onChange={(e) => setInputArray(e.target.value)}
+          style={{ padding: '10px', width: '300px', marginRight: '10px' }}
+        />
+        <button type="submit" style={{ padding: '10px' }}>
+          Enviar
+        </button>
+      </form>
+
+      {reversedArray.length > 0 && (
+        <table style={{ marginTop: '20px', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={{ border: '1px solid black', padding: '10px' }}>Número</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reversedArray.map((num, index) => (
+              <tr key={index}>
+                <td
+                  style={{
+                    border: '1px solid black',
+                    padding: '10px',
+                    backgroundColor:
+                      num === 0 ? 'yellow' : num % 2 === 0 ? 'green' : 'red',
+                    color: 'white',
+                  }}
+                >
+                  {num}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
