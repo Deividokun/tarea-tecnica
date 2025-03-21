@@ -40,3 +40,77 @@
 .read-the-docs {
   color: #888;
 }
+
+.App {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 300px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 60%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+td {
+  font-size: 16px;
+  color: white;
+}
+
+td.green {
+  background-color: #28a745; /* Verde para números pares */
+}
+
+td.red {
+  background-color: #dc3545; /* Rojo para números impares */
+}
+
+td.yellow {
+  background-color: #ffc107; /* Amarillo para el 0 */
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
